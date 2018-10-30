@@ -50,6 +50,7 @@
   },
   "license": "BSD-2-Clause",
   "scripts": {
+    "build" : "gulp build",
     "test": "gulp travis",
     "unit-test": "gulp test",
     "lint": "gulp lint",
