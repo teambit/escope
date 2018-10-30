@@ -505,6 +505,20 @@ export default class Referencer extends esrecurse.Visitor {
         }
     }
 
+    JSXElement(node) {
+        this.visit(node.openingElement);
+    }
+
+    JSXOpeningElement(node) {
+        this.visit(node.name);
+    }
+
+    JSXIdentifier(node) {
+        node.type = "Identifier";
+        this.currentScope().__referencing(node);
+    }
+
+
     // sec 13.11.8
     SwitchStatement(node) {
         var i, iz;
