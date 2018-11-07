@@ -509,13 +509,13 @@ export default class Referencer extends esrecurse.Visitor {
         this.visitChildren(node);
     }
 
-    // JSXOpeningElement(node) {
-    //     this.visitChildren(node);
-    // }
+    JSXClosingElement(node) {
+        this.close(node);
+    }
 
     JSXIdentifier(node) {
         node.type = "Identifier";
-        const refsWithSameIdentifier = this.currentScope().references.filter(reference => reference.identifier.name === node.name);
+        const refsWithSameIdentifier = this.currentScope().references.filter(reference => reference.isIdentifierEquals(node));
 
         if (refsWithSameIdentifier.length === 0) {
             this.currentScope().__referencing(node);

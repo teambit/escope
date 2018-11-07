@@ -133,6 +133,38 @@ export default class Reference {
     isReadWrite() {
         return this.flag === Reference.RW;
     }
+
+    locationEquals(targetIdentifier) {
+        const sourceLineStart = this.identifier.loc.start.line;
+        const sourceColumnStart = this.identifier.loc.start.column;
+        const sourceLineEnd = this.identifier.loc.end.line;
+        const sourceColumnEnd = this.identifier.loc.end.column;
+
+        const targetLineStart = targetIdentifier.loc.start.line;
+        const targetColumnStart = targetIdentifier.loc.start.column;
+        const targetLineEnd = targetIdentifier.loc.end.line;
+        const targetColumnEnd = targetIdentifier.loc.end.column;
+
+        return (
+          sourceLineStart === targetLineStart &&
+          sourceColumnStart === targetColumnStart &&
+          sourceLineEnd === targetLineEnd &&
+          sourceColumnEnd === targetColumnEnd
+        );
+    }
+
+    isIdentifierEquals(identifier) {
+        if (this.identifier.name === identifier.name) {
+            if (this.identifier.range && identifier.range &&
+                this.rangeEquals(identifier.range)) {
+                return true;
+            } else if (this.identifier.loc && identifier.loc &&
+                this.locationEquals(identifier)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 /**
